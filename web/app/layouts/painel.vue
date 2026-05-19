@@ -77,7 +77,7 @@
     min-height: 0;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 1rem;
+    padding: 2rem;
     background: #f1f5f9;
 }
 </style>
