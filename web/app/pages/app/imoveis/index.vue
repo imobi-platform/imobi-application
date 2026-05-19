@@ -20,7 +20,6 @@
 </template>
 
 <script setup>
-import SectionLabel from '~/components/painel/common/SectionLabel.vue';
 import { ChartColumn, Plus } from '@lucide/vue'
 
 definePageMeta({
