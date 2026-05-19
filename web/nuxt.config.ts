@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   routeRules: {
     '/app/**': { ssr: false },
   },
-  
+
   css: [ '~/assets/css/main.css' ],
 
   vite: {
@@ -17,7 +17,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiBase: process.env.NUXT_PUBLIC_API_URL,
+      apiBase: process.env.NUXT_PUBLIC_API_BASE,
     },
   },
 
