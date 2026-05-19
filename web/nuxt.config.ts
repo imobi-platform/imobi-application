@@ -3,10 +3,10 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineNuxtConfig({
 
-  // routeRules: {
-  //   '/app/**': { ssr: false },
-  // }
-  // css
+  routeRules: {
+    '/app/**': { ssr: false },
+  },
+  
   css: [ '~/assets/css/main.css' ],
 
   vite: {
