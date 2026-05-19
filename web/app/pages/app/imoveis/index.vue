@@ -1,28 +1,19 @@
 <template>
- <table>
-    <thead>
-      <tr>
-        <th>id</th>
-        <th>nome</th>
-        <th>descrição</th>
-        <th>ação</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>nome</td>
-        <td>descrição</td>
-        <td>ação</td>
-      </tr>
-    </tbody>
-  </table>
+  <div>
+    <p v-if="pending">Carregando...</p>
+    <p v-else-if="error">Erro: {{ error.message }}</p>
+    <p v-else class="text-green-500">API Health: {{ health?.message }}</p>
+  </div>
 </template>
 
 <script setup>
-import { ChartColumn, Plus } from '@lucide/vue'
-
 definePageMeta({
   layout: 'painel',
+})
+
+const config = useRuntimeConfig()
+
+const { data: health, pending, error } = await useFetch('/api/health', {
+  baseURL: config.public.apiBase,
 })
 </script>
