@@ -1,0 +1,45 @@
+name: Deploy production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to VPS
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          script: |
+            set -e
+
+            cd /var/www/imobi
+
+            git pull origin main
+
+            cd /var/www/imobi/api
+
+            composer install --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader
+
+            php artisan down || true
+            php artisan migrate --force
+            php artisan optimize:clear
+            php artisan config:cache
+            php artisan route:cache || true
+            php artisan up
+
+            cd /var/www/imobi/web
+
+            yarn install --frozen-lockfile
+            yarn build
+
+            pm2 reload imobi-web
+            pm2 save
